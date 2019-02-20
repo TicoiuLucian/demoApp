@@ -29,7 +29,7 @@ public class Operation {
 	@Temporal(TemporalType.DATE)
 	private Date outDate;
 
-	@OneToMany(mappedBy = "operation", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@OneToMany(mappedBy = "operation", cascade = CascadeType.ALL)
 	private List<Part> parts;
 
 	private int laborPrice;
