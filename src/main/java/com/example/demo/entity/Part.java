@@ -1,16 +1,18 @@
 package com.example.demo.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Part {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 
 	private int price;
@@ -21,19 +23,9 @@ public class Part {
 
 	private String code;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="operation_id",  nullable = true)
 	private Operation operation;
-
-	public Part(int price, String name, String manufacturer, String code) {
-		super();
-		this.price = price;
-		this.name = name;
-		this.manufacturer = manufacturer;
-		this.code = code;
-	}
-
-	public Part() {
-	}
 
 	public int getPrice() {
 		return price;

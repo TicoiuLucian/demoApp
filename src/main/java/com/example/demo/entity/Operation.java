@@ -3,12 +3,14 @@ package com.example.demo.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PostRemove;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -16,24 +18,37 @@ import javax.persistence.TemporalType;
 public class Operation {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	
+
 	private String name;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date inDate;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date outDate;
-	
-	@OneToMany(mappedBy = "operation")
+
+	@OneToMany(mappedBy = "operation", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	private List<Part> parts;
-	
+
 	private int laborPrice;
-	
+
 	@ManyToOne
 	private Vehicle vehicle;
+
+	public Operation(Operation op) {
+		op.setInDate(inDate);
+		op.setLaborPrice(laborPrice);
+		op.setName(name);
+		op.setOutDate(outDate);
+		op.setParts(parts);
+		op.setVehicle(vehicle);
+	}
+
+	public Operation() {
+
+	}
 
 	public Date getInDate() {
 		return inDate;

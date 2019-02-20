@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Part;
+import com.example.demo.repository.OperationRepository;
 import com.example.demo.repository.PartRepository;
 
 @RestController
@@ -22,6 +23,11 @@ public class PartController {
 
 	@Autowired
 	private PartRepository partRepository;
+	
+
+	@Autowired
+	OperationRepository operationRepository;
+	
 	
 	@GetMapping("s")
 	public List<Part> getAllParts() {
