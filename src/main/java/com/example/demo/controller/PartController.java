@@ -10,45 +10,46 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Part;
 import com.example.demo.repository.PartRepository;
 
 @RestController
+@RequestMapping("/part")
 public class PartController {
 
 	@Autowired
 	private PartRepository partRepository;
 	
-	@GetMapping("/parts")
+	@GetMapping("s")
 	public List<Part> getAllParts() {
 	    return partRepository.findAll();
 	}
 	
-	@GetMapping("/part/{id}")
+	@GetMapping("/{id}")
     public Optional<Part> getPartById(@PathVariable long id) {
         return partRepository.findById(id);
     }
 	
-	@GetMapping("/part/{name}")
-	public List<Part> getPartByName(@RequestParam(value="name") String name) {
+	@GetMapping("/name/{name}")
+	public List<Part> getPartByName(@PathVariable String name) {
 		return partRepository.findByName(name);
 	}
 	
-	@DeleteMapping("/part/{id}")
+	@DeleteMapping("/{id}")
 	public void deletePart(@PathVariable long id) {
 		partRepository.deleteById(id);
 	}
 	
-	@PostMapping("/part")
+	@PostMapping
 	public Part savePart(@RequestBody Part p)
 	{
 		return partRepository.save(p);
 	}
 	
-	@PutMapping("/part/{id}")
+	@PutMapping("/{id}")
 	public Part updatePart(@RequestBody Part p){
 		return partRepository.save(p);
 	}
