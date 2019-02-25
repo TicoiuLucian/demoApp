@@ -1,29 +1,22 @@
 package com.example.demo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.demo.entity.Part;
-import com.example.demo.repository.PartRepository;
-
 @SpringBootApplication
-public class DemoApplication implements CommandLineRunner{
-
+//public class DemoApplication implements CommandLineRunner{
+public class DemoApplication{
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@Autowired
-	PartRepository partRepo;
+//	@Autowired
+//	PartRepository partRepo;
 	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+//	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Override
-	public void run(String... args) throws Exception {
+//	@Override
+//	public void run(String... args) throws Exception {
 		
 		// courseRepository.playWithEntityManager();
 //		studentRepository.saveStudentWithPassport();
@@ -40,7 +33,5 @@ public class DemoApplication implements CommandLineRunner{
 //		employeeRepository.insert(new FullTimeEmployee("Jack", new BigDecimal("100000")));
 //		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal("50")));
 //
-	}
+//	}
 }
-
-			

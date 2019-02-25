@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,13 +19,19 @@ public class Vehicle {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
+	@Column(nullable=false)
 	private String model;
 	
+	@Column(nullable=false)
 	private String manufacturer;
 	
+	@Column(nullable=false)
 	private long km;
 
+	@Column(nullable=false)
 	private String vin;
+	
+	private String licenceNumber;
 	
 	@OneToMany(mappedBy = "vehicle")
 	private List<Operation> operations;
@@ -93,6 +100,14 @@ public class Vehicle {
 
 	public void setVechicleType(VehicleType vechicleType) {
 		this.vechicleType = vechicleType;
+	}
+
+	public String getLicenceNumber() {
+		return licenceNumber;
+	}
+
+	public void setLicenceNumber(String licenceNumber) {
+		this.licenceNumber = licenceNumber;
 	}
 
 }

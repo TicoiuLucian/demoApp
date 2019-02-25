@@ -27,6 +27,16 @@ public class Part {
 	@JoinColumn(name="operation_id",  nullable = true)
 	private Operation operation;
 
+	public Part() {}
+	
+	public Part(Part part) {
+		this.price = part.getPrice();
+		this.name = part.getName();
+		this.manufacturer = part.getManufacturer();
+		this.code = part.getCode();
+		this.operation = part.getOperation();
+	}
+
 	public int getPrice() {
 		return price;
 	}

@@ -19,12 +19,23 @@ public abstract class Person {
 	private String firstName;
 
 	private String lastName;
-	
+
 	@Email
 	private String email;
-	
+
 	private String phoneNumber;
-	
+
+	public Person() {
+	}
+
+	public Person(Person p) {
+		super();
+		this.firstName = p.getFirstName();
+		this.lastName = p.getLastName();
+		this.email = p.getEmail();
+		this.phoneNumber = p.getPhoneNumber();
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -40,7 +51,7 @@ public abstract class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -52,7 +63,7 @@ public abstract class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -60,5 +71,5 @@ public abstract class Person {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
 }
