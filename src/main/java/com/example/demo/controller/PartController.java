@@ -18,47 +18,45 @@ import com.example.demo.entity.Part;
 import com.example.demo.repository.OperationRepository;
 import com.example.demo.repository.PartRepository;
 
+@PreAuthorize("hasAnyRole('ADMIN')")
 @RestController
 @RequestMapping("/part")
 public class PartController {
 
 	@Autowired
 	private PartRepository partRepository;
-	
 
 	@Autowired
 	OperationRepository operationRepository;
-	
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping("s")
+
+	@RequestMapping("/all")
 	public List<Part> getAllParts() {
-	    return partRepository.findAll();
+		return partRepository.findAll();
 	}
-	
+
 	@GetMapping("/{id}")
-    public Optional<Part> getPartById(@PathVariable long id) {
-        return partRepository.findById(id);
-    }
-	
+	public Optional<Part> getPartById(@PathVariable long id) {
+		return partRepository.findById(id);
+	}
+
 	@GetMapping("/name/{name}")
 	public List<Part> getPartByName(@PathVariable String name) {
 		return partRepository.findByName(name);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public void deletePart(@PathVariable long id) {
 		partRepository.deleteById(id);
 	}
-	
+
 	@PostMapping
-	public Part savePart(@RequestBody Part p)
-	{
+	public Part savePart(@RequestBody Part p) {
 		return partRepository.save(p);
 	}
-	
+
 	@PutMapping("/{id}")
-	public Part updatePart(@RequestBody Part p){
+	public Part updatePart(@RequestBody Part p) {
 		return partRepository.save(p);
 	}
-	
+
 }
