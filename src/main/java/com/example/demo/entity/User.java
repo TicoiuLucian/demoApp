@@ -1,7 +1,8 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -31,7 +32,7 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
-	private int id;
+	private long id;
 	@Column(name = "email")
 	private String email;
 	@Column(name = "password")
@@ -44,7 +45,7 @@ public class User implements UserDetails {
 	private int active;
 	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles;
+	private List<Role> roles = new ArrayList<Role>();
 
 	public User() {
 	}
@@ -59,7 +60,7 @@ public class User implements UserDetails {
 		this.password = user.getPassword();
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -107,11 +108,11 @@ public class User implements UserDetails {
 		this.active = active;
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
