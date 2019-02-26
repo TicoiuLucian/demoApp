@@ -14,15 +14,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "user")
 public class User implements UserDetails {
 
 	/**
@@ -31,20 +29,19 @@ public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
-	private long id;
-	@Column(name = "email")
+	private Long id;
+	@Column(name = "email", unique = true, nullable=false)
 	private String email;
 	@Column(name = "password")
 	private String password;
-	@Column(name = "name")
+	@Column(name = "name", unique = true, nullable=false)
 	private String name;
 	@Column(name = "last_name")
 	private String lastName;
 	@Column(name = "active")
 	private int active;
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles = new ArrayList<Role>();
 
 	public User() {
@@ -60,11 +57,11 @@ public class User implements UserDetails {
 		this.password = user.getPassword();
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -119,7 +116,7 @@ public class User implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-		return getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
+		return getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
 				.collect(Collectors.toList());
 	}
 

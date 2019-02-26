@@ -1,29 +1,52 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int roleId;
+	private Long id;
 
-	private String role;
+	@Column(unique = true, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private RoleType name;
 
-	public String getRole() {
-		return role;
+	@ManyToMany(mappedBy = "roles")
+	@JsonIgnore
+	private List<User> users = new ArrayList<User>();
+
+	public RoleType getName() {
+		return name;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setName(RoleType name) {
+		this.name = name;
 	}
 
-	public int getRoleId() {
-		return roleId;
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 }
