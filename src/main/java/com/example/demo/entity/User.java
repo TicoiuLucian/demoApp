@@ -20,29 +20,38 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User implements UserDetails {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(name = "email", unique = true, nullable=false)
+
+	@Column(unique = true, nullable = false)
 	private String email;
-	@Column(name = "password")
+
+	@Column(nullable = false)
 	private String password;
-	@Column(name = "name", unique = true, nullable=false)
+
+	@Column(unique = true, nullable = false)
 	private String name;
-	@Column(name = "last_name")
+
 	private String lastName;
-	@Column(name = "active")
+
+	@Column(nullable = false)
 	private int active;
+
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles = new ArrayList<Role>();
+
+	@ManyToMany(mappedBy = "users")
+	@JsonIgnore
+	private List<Operation> operations = new ArrayList<Operation>();
 
 	public User() {
 	}
@@ -73,6 +82,7 @@ public class User implements UserDetails {
 		this.email = email;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -143,5 +153,13 @@ public class User implements UserDetails {
 	@Override
 	public String getUsername() {
 		return this.name;
+	}
+
+	public List<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
 	}
 }

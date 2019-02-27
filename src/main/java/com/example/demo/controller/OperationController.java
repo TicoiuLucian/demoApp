@@ -19,17 +19,17 @@ public class OperationController {
 
 	@Autowired
 	OperationRepository operationRepository;
-	
+
+	@RequestMapping("/all")
 	public List<Operation> getAllOperations() {
-	    return operationRepository.findAll();
+		return operationRepository.findAll();
 	}
-	
+
 	@PostMapping
-	public Operation saveOperation(@RequestBody Operation o)
-	{
+	public Operation saveOperation(@RequestBody Operation o) {
 		return operationRepository.save(o);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public void deleteOperation(@PathVariable long id) {
 		operationRepository.deleteById(id);

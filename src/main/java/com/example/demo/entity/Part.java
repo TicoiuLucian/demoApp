@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,20 +16,25 @@ public class Part {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 
+	@Column(nullable = false)
 	private int price;
 
+	@Column(nullable = false)
 	private String name;
 
+	@Column(nullable = false)
 	private String manufacturer;
 
+	@Column(nullable = false)
 	private String code;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="operation_id",  nullable = true)
+	@JoinColumn(name = "operation_id", nullable = false)
 	private Operation operation;
 
-	public Part() {}
-	
+	public Part() {
+	}
+
 	public Part(Part part) {
 		this.price = part.getPrice();
 		this.name = part.getName();

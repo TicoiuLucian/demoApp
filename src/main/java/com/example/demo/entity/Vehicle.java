@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,29 +20,29 @@ public class Vehicle {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String model;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String manufacturer;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private long km;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String vin;
-	
+
 	private String licenceNumber;
-	
-	@OneToMany(mappedBy = "vehicle")
+
+	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.MERGE)
 	private List<Operation> operations;
-	
+
 	@OneToOne
 	private Client client;
-	
+
 	@Enumerated(EnumType.STRING)
 	private VehicleType vechicleType;
-	
+
 	public String getModel() {
 		return model;
 	}
