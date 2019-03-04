@@ -16,12 +16,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
+@SQLDelete(sql = "update user set active = 0 where id = ?")
+@Where(clause = "active = 1")
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
@@ -50,6 +55,11 @@ public class User implements UserDetails {
 
 	@OneToMany(mappedBy = "user")
 	private List<UserOperationVehicle> uov = new ArrayList<>();
+
+	@PreRemove
+	private void preRemove() {
+		this.active = 0;
+	}
 
 	public User() {
 	}

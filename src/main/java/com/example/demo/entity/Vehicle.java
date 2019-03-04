@@ -34,9 +34,6 @@ public class Vehicle {
 
 	private String licenceNumber;
 
-//	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.MERGE)
-//	private List<Operation> operations;
-
 	@OneToOne
 	private Client client;
 
