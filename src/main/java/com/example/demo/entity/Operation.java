@@ -9,10 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,25 +33,12 @@ public class Operation {
 
 	private int laborPrice;
 
-	@ManyToOne
-	private Vehicle vehicle;
+	@OneToMany(mappedBy = "operation")
+	private List<UserOperationVehicle> uov = new ArrayList<>();
 
-	@ManyToMany(cascade = CascadeType.MERGE)
-	@JoinTable(name = "operations_users", joinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-	private List<User> users = new ArrayList<User>();
-
-	public Operation(Operation op) {
-		op.setInDate(inDate);
-		op.setLaborPrice(laborPrice);
-		op.setName(name);
-		op.setOutDate(outDate);
-		op.setParts(parts);
-		op.setVehicle(vehicle);
-	}
-
-	public Operation() {
-
-	}
+//	@ManyToMany(cascade = CascadeType.MERGE)
+//	@JoinTable(name = "operations_users", joinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+//	private List<User> users = new ArrayList<User>();
 
 	public Date getInDate() {
 		return inDate;
@@ -93,10 +76,6 @@ public class Operation {
 		return id;
 	}
 
-	public Vehicle getVehicle() {
-		return vehicle;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -105,15 +84,11 @@ public class Operation {
 		this.name = name;
 	}
 
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
+	public List<UserOperationVehicle> getUserOperationVehicle() {
+		return uov;
 	}
 
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setUserOperationVehicle(List<UserOperationVehicle> uov) {
+		this.uov = uov;
 	}
 }

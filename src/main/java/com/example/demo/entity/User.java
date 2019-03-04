@@ -15,12 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User implements UserDetails {
@@ -49,9 +48,8 @@ public class User implements UserDetails {
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles = new ArrayList<Role>();
 
-	@ManyToMany(mappedBy = "users")
-	@JsonIgnore
-	private List<Operation> operations = new ArrayList<Operation>();
+	@OneToMany(mappedBy = "user")
+	private List<UserOperationVehicle> uov = new ArrayList<>();
 
 	public User() {
 	}
@@ -155,11 +153,11 @@ public class User implements UserDetails {
 		return this.name;
 	}
 
-	public List<Operation> getOperations() {
-		return operations;
+	public List<UserOperationVehicle> getUserOperationVehicle() {
+		return uov;
 	}
 
-	public void setOperations(List<Operation> operations) {
-		this.operations = operations;
+	public void setUserOperationVehicle(List<UserOperationVehicle> uov) {
+		this.uov = uov;
 	}
 }

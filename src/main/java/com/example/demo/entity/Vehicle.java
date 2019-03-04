@@ -1,8 +1,8 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,14 +34,17 @@ public class Vehicle {
 
 	private String licenceNumber;
 
-	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.MERGE)
-	private List<Operation> operations;
+//	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.MERGE)
+//	private List<Operation> operations;
 
 	@OneToOne
 	private Client client;
 
+	@OneToMany(mappedBy = "vehicle")
+	private List<UserOperationVehicle> uov = new ArrayList<>();
+
 	@Enumerated(EnumType.STRING)
-	private VehicleType vechicleType;
+	private VehicleType vehicleType;
 
 	public String getModel() {
 		return model;
@@ -75,12 +78,12 @@ public class Vehicle {
 		this.vin = vin;
 	}
 
-	public List<Operation> getOperations() {
-		return operations;
+	public List<UserOperationVehicle> getUserOperationVehicle() {
+		return uov;
 	}
 
-	public void setOperations(List<Operation> operations) {
-		this.operations = operations;
+	public void setUserOperationVehicle(List<UserOperationVehicle> uov) {
+		this.uov = uov;
 	}
 
 	public Client getClient() {
@@ -95,12 +98,12 @@ public class Vehicle {
 		return id;
 	}
 
-	public VehicleType getVechicleType() {
-		return vechicleType;
+	public VehicleType getVehicleType() {
+		return vehicleType;
 	}
 
-	public void setVechicleType(VehicleType vechicleType) {
-		this.vechicleType = vechicleType;
+	public void setVehicleType(VehicleType vehicleType) {
+		this.vehicleType = vehicleType;
 	}
 
 	public String getLicenceNumber() {
