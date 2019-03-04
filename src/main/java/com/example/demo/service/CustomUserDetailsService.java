@@ -25,14 +25,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return optionalUsers.map(User::new).get();
 	}
 
-//	public User save(User user) {
-//
-//		for (Role r : roleRepository.findAll()) {
-//			if (user.getRoles().contains(r)) {
-//				userRepository.save(user);
-//			}
-//		}
-//		return user;
-//	}
-
 }
