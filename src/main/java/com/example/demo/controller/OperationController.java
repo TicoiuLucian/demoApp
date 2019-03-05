@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,7 @@ import com.example.demo.repository.OperationRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserOperationVehicleService;
 
-@PreAuthorize("hasAnyRole('ADMIN')")
+//@PreAuthorize("hasAnyRole('ADMIN')")
 @RestController
 @RequestMapping("/operation")
 public class OperationController {

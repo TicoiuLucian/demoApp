@@ -1,8 +1,5 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +41,16 @@ public class UserOperationVehicleService {
 		Vehicle v = vehicleRepo.findById(vehicleId).get();
 
 		UserOperationVehicle uov = new UserOperationVehicle(u, o, v);
-		List<UserOperationVehicle> uovs = new ArrayList<UserOperationVehicle>();
 
-		uovs.add(uov);
-		o.setUserOperationVehicle(uovs);
+		o.addUserOperationVehicle(uov);
 		operationRepo.save(o);
-		u.setUserOperationVehicle(uovs);
+
+		u.addUserOperationVehicle(uov);
 		userRepo.save(u);
-		v.setUserOperationVehicle(uovs);
+
+		v.addUserOperationVehicle(uov);
 		vehicleRepo.save(v);
+
 		uovRepo.save(uov);
 	}
 }

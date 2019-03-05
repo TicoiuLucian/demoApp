@@ -1,5 +1,9 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,7 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Part {
@@ -16,8 +21,9 @@ public class Part {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 
-	@Column(nullable = false)
-	private int price;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinTable(name = "parts_prices", joinColumns = @JoinColumn(name = "part_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "price_id", referencedColumnName = "id"))
+	private List<Price> prices = new ArrayList<Price>();
 
 	@Column(nullable = false)
 	private String name;
@@ -28,27 +34,16 @@ public class Part {
 	@Column(nullable = false)
 	private String code;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "operation_id", nullable = false)
-	private Operation operation;
+	@ManyToMany
+	@JoinTable(name = "parts_operations", joinColumns = @JoinColumn(name = "part_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"))
+	private List<Operation> operations;
 
-	public Part() {
+	public List<Price> getPrices() {
+		return prices;
 	}
 
-	public Part(Part part) {
-		this.price = part.getPrice();
-		this.name = part.getName();
-		this.manufacturer = part.getManufacturer();
-		this.code = part.getCode();
-		this.operation = part.getOperation();
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
+	public void setPrices(List<Price> prices) {
+		this.prices = prices;
 	}
 
 	public String getName() {
@@ -79,12 +74,12 @@ public class Part {
 		return id;
 	}
 
-	public Operation getOperation() {
-		return operation;
+	public List<Operation> getOperations() {
+		return operations;
 	}
 
-	public void setOperation(Operation operation) {
-		this.operation = operation;
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
 	}
 
 }

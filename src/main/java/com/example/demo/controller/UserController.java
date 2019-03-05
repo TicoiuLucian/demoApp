@@ -49,9 +49,9 @@ public class UserController {
 		return userRepository.save(u);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping("/update")
 	public User updateUser(@RequestBody User u) {
+		u.setPassword(passwordEncoder.encode(u.getPassword()));
 		return userRepository.save(u);
 	}
-
 }

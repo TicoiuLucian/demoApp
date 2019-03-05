@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Operation {
@@ -28,7 +30,8 @@ public class Operation {
 	@Temporal(TemporalType.DATE)
 	private Date outDate;
 
-	@OneToMany(mappedBy = "operation", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "operations")
+	@JsonIgnore
 	private List<Part> parts;
 
 	private int laborPrice;
@@ -88,7 +91,7 @@ public class Operation {
 		return uov;
 	}
 
-	public void setUserOperationVehicle(List<UserOperationVehicle> uov) {
-		this.uov = uov;
+	public void addUserOperationVehicle(UserOperationVehicle uov) {
+		this.uov.add(uov);
 	}
 }

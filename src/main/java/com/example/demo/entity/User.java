@@ -167,7 +167,7 @@ public class User implements UserDetails {
 		return uov;
 	}
 
-	public void setUserOperationVehicle(List<UserOperationVehicle> uov) {
-		this.uov = uov;
+	public void addUserOperationVehicle(UserOperationVehicle uov) {
+		this.uov.add(uov);
 	}
 }
