@@ -1,17 +1,19 @@
 package com.example.demo.entity;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-
 @Entity
-public class Client extends Person{
-	
+public class Client extends Person {
+
 	@OneToOne
 	private Address address;
 
-	@OneToOne(mappedBy = "client")
-	private Vehicle vehicle;
+	@OneToMany(mappedBy = "client")
+	private Set<Vehicle> vehicles;
 
 	public Address getAddress() {
 		return address;
@@ -21,11 +23,11 @@ public class Client extends Person{
 		this.address = address;
 	}
 
-	public Vehicle getVehicle() {
-		return vehicle;
+	public Set<Vehicle> getVehicles() {
+		return vehicles;
 	}
 
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
+	public void setVehicles(Set<Vehicle> vehicles) {
+		this.vehicles = vehicles;
 	}
 }

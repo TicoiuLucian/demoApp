@@ -10,8 +10,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Vehicle {
@@ -34,7 +36,8 @@ public class Vehicle {
 
 	private String licenceNumber;
 
-	@OneToOne
+	@ManyToOne
+	@JsonIgnore
 	private Client client;
 
 	@OneToMany(mappedBy = "vehicle")
